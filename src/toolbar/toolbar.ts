@@ -39,32 +39,34 @@ export class Toolbar {
       onMove: (p2: Point) => void;
     }
   ) {
-    this.addButton(text, (changeActive) => {
-      changeActive(true);
+    const mouseDownHandler = (e1: MouseEvent) => {
+      const p1 = getMousePos(e1);
+      handlers.onStart(p1);
 
-      svg.el.addEventListener(
-        "mousedown",
-        (e1) => {
-          const p1 = getMousePos(e1);
-          handlers.onStart(p1);
+      const moveFunc = (e2: MouseEvent) => {
+        const p2 = getMousePos(e2);
+        handlers.onMove(p2);
+      };
 
-          const moveFunc = (e2: MouseEvent) => {
-            const p2 = getMousePos(e2);
-            handlers.onMove(p2);
-          };
-
-          document.addEventListener("mousemove", moveFunc);
-          document.addEventListener(
-            "mouseup",
-            () => {
-              document.removeEventListener("mousemove", moveFunc);
-              changeActive(false);
-            },
-            { once: true }
-          );
+      document.addEventListener("mousemove", moveFunc);
+      document.addEventListener(
+        "mouseup",
+        () => {
+          document.removeEventListener("mousemove", moveFunc);
         },
         { once: true }
       );
+    };
+
+    let active = false;
+    this.addButton(text, (changeActive) => {
+      changeActive(!active);
+      if (active) {
+        svg.el.removeEventListener("mousedown", mouseDownHandler);
+      } else {
+        svg.el.addEventListener("mousedown", mouseDownHandler);
+      }
+      active = !active;
     });
   }
 }
