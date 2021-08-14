@@ -1,11 +1,8 @@
-#toolbar {
-  $bg: #141b20;
-  $spacing: 0.5rem;
+$bg: #141b20;
+$spacing: 0.5rem;
 
+@mixin container {
   position: fixed;
-  top: $spacing;
-  left: $spacing;
-  right: $spacing;
 
   padding: 0.8rem;
   background: lighten($bg, 4);
@@ -15,6 +12,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+#toolbar {
+  @include container;
+
+  left: $spacing;
+  right: $spacing;
+  top: $spacing;
 
   button {
     background: lighten($bg, 12);
@@ -35,6 +40,32 @@
 
     &.active {
       background: lighten(saturate($bg, 100), 30);
+    }
+  }
+}
+
+#colorsBar {
+  @include container;
+
+  left: $spacing;
+  right: $spacing;
+  bottom: $spacing;
+
+  .pickerContainer {
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+
+    &:not(:last-child) {
+      border-right: 1px solid lighten($bg, 50);
+      padding-right: 1rem;
+    }
+
+    label {
+      margin-left: 0.4rem;
+      font-size: 0.9rem;
     }
   }
 }
