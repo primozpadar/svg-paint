@@ -13,9 +13,14 @@ const svg = new Svg(app, { height: '100vh', width: '100vw' });
 
 const toolbar = new Toolbar(app);
 const inputBar = new InputBar(app);
-inputBar.addPicker('Background', 'background', (color) => {
-  svg.setBackgroundColor(color);
-});
+inputBar.addPicker(
+  'Background',
+  'background',
+  (color) => {
+    svg.setBackgroundColor(color);
+  },
+  'transparent',
+);
 inputBar.addPicker('Stoke', 'stroke', undefined);
 inputBar.addNumberInput('Stroke Width', 'strokeWidth', (val) => console.log(val));
 
