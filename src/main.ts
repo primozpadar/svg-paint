@@ -26,6 +26,5 @@ toolbar.addDrawButton('Rectangle', svg, {
   onMove: (p2) => tempRect.updatePoints({ p2 }),
 });
 
-toolbar.addButton('Screenshot', () => {
-  Save.screenshot(svg, bgColor);
-});
+toolbar.addButton('Screenshot', () => Save.screenshot(svg, bgColor));
+toolbar.addButton('Save SVG', () => Save.svg(svg));

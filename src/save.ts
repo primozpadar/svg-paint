@@ -87,6 +87,20 @@ export class Save {
       };
     });
   }
+
+  static svg(svg: Svg) {
+    const svgData = new XMLSerializer()
+      .serializeToString(svg.el)
+      .replace('100vh', '100%')
+      .replace('100vw', '100%')
+      .replace('cursor: crosshair;', '');
+
+    const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const URL = window.URL || window.webkitURL || window;
+    const blobURL = URL.createObjectURL(blob);
+
+    downloadURL(blobURL, 'vector.svg');
+  }
 }
 
 class RectFollow {
