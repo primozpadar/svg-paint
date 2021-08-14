@@ -3,7 +3,7 @@ import { Save } from './save';
 import { Line } from './svg/line';
 import { Rectangle } from './svg/rectangle';
 import { Svg } from './svg/svg';
-import { ColorsBar } from './toolbar/colorsBar';
+import { InputBar } from './toolbar/inputBar';
 import { Toolbar } from './toolbar/toolbar';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
@@ -12,13 +12,14 @@ const app = document.querySelector<HTMLDivElement>('#app')!;
 const svg = new Svg(app, { height: '100vh', width: '100vw' });
 
 const toolbar = new Toolbar(app);
-const colorsBar = new ColorsBar(app);
-colorsBar.addPicker('Background', 'background', (color) => {
+const inputBar = new InputBar(app);
+inputBar.addPicker('Background', 'background', (color) => {
   svg.setBackgroundColor(color);
 });
-colorsBar.addPicker('Stoke', 'stroke');
+inputBar.addPicker('Stoke', 'stroke', undefined);
+inputBar.addNumberInput('Stroke Width', 'strokeWidth', (val) => console.log(val));
 
-const getStrokeStyle = () => ({ color: ColorsBar.colors.stroke, width: 1 });
+const getStrokeStyle = () => ({ color: InputBar.colors.stroke, width: InputBar.numbers.strokeWidth });
 
 let tempLine: Line;
 toolbar.addDrawButton('Line', svg, {
@@ -32,5 +33,5 @@ toolbar.addDrawButton('Rectangle', svg, {
   onMove: (p2) => tempRect.updatePoints({ p2 }),
 });
 
-toolbar.addButton('Screenshot', () => Save.screenshot(svg, ColorsBar.colors.background));
+toolbar.addButton('Screenshot', () => Save.screenshot(svg, InputBar.colors.background));
 toolbar.addButton('Save SVG', () => Save.svg(svg));

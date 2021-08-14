@@ -44,14 +44,14 @@ $spacing: 0.5rem;
   }
 }
 
-#colorsBar {
+#inputBar {
   @include container;
 
   left: $spacing;
   right: $spacing;
   bottom: $spacing;
 
-  .pickerContainer {
+  .inputContainer {
     color: white;
     font-weight: bold;
     display: flex;
@@ -66,6 +66,15 @@ $spacing: 0.5rem;
     label {
       margin-left: 0.4rem;
       font-size: 0.9rem;
+    }
+
+    input {
+      border-radius: 0.1rem;
+    }
+
+    input[type='number'] {
+      width: 2rem;
+      padding: 0.24rem;
     }
   }
 }
