@@ -37,7 +37,12 @@ export class InputBar {
     this.el.appendChild(pickerContainer);
   }
 
-  addNumberInput(label: string, numberKey: string, onChange: (value: number) => void) {
+  addNumberInput(
+    label: string,
+    numberKey: string,
+    onChange: (value: number) => void,
+    defaultValue: number = 1,
+  ) {
     const pickerContainer = document.createElement('div');
     pickerContainer.className = 'inputContainer';
 
@@ -45,7 +50,7 @@ export class InputBar {
     picker.type = 'number';
     picker.value = '1';
 
-    InputBar.numbers[label] = 1;
+    InputBar.numbers[numberKey] = defaultValue;
     picker.addEventListener('input', (e) => {
       const el = e.target as HTMLInputElement;
       const value = parseInt(el.value);

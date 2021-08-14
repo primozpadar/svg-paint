@@ -91,8 +91,8 @@ export class Save {
   static svg(svg: Svg) {
     const svgData = new XMLSerializer()
       .serializeToString(svg.el)
-      .replace('100vh', '100%')
-      .replace('100vw', '100%')
+      .replace('100vh', svg.el.clientHeight + 'px')
+      .replace('100vw', svg.el.clientWidth + 'px')
       .replace('cursor: crosshair;', '');
 
     const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
