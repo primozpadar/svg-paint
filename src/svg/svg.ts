@@ -27,4 +27,8 @@ export class Svg {
   setBackgroundColor(color: string) {
     setAttr(this.rectBg, 'fill', color);
   }
+
+  setCursor(cursor: CSSStyleDeclaration['cursor']) {
+    this.el.style.cursor = cursor;
+  }
 }

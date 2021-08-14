@@ -62,8 +62,10 @@ export class Toolbar {
     this.addButton(text, (changeActive) => {
       changeActive(!active);
       if (active) {
+        svg.setCursor('default');
         svg.el.removeEventListener('mousedown', mouseDownHandler);
       } else {
+        svg.setCursor('crosshair');
         svg.el.addEventListener('mousedown', mouseDownHandler);
       }
       active = !active;
