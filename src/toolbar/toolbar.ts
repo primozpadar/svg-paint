@@ -1,7 +1,7 @@
-import { Point } from "../svg/point";
-import { Svg } from "../svg/svg";
-import getMousePos from "../utils/getMousePos";
-import "./toolbar.scss";
+import { Point } from '../svg/point';
+import { Svg } from '../svg/svg';
+import getMousePos from '../utils/getMousePos';
+import './toolbar.scss';
 
 type ActiveBtnFn = (val: boolean) => void;
 
@@ -9,26 +9,26 @@ export class Toolbar {
   el: HTMLDivElement;
 
   constructor(mountTo: HTMLElement) {
-    this.el = document.createElement("div");
-    this.el.id = "toolbar";
+    this.el = document.createElement('div');
+    this.el.id = 'toolbar';
     mountTo.appendChild(this.el);
   }
 
   addButton(text: string, onClick: (changeActive: ActiveBtnFn) => void) {
-    const btn = document.createElement("button");
+    const btn = document.createElement('button');
     btn.textContent = text;
     this.el.appendChild(btn);
 
     const changeActive: ActiveBtnFn = (val) => {
-      btn.classList.toggle("active", val);
+      btn.classList.toggle('active', val);
     };
 
-    btn.addEventListener("click", () => onClick(changeActive));
+    btn.addEventListener('click', () => onClick(changeActive));
     return btn;
   }
 
   changeVisibility(visible: boolean) {
-    this.el.style.display = visible ? "flex" : "none";
+    this.el.style.display = visible ? 'flex' : 'none';
   }
 
   addDrawButton(
@@ -37,7 +37,7 @@ export class Toolbar {
     handlers: {
       onStart: (p1: Point) => void;
       onMove: (p2: Point) => void;
-    }
+    },
   ) {
     const mouseDownHandler = (e1: MouseEvent) => {
       const p1 = getMousePos(e1);
@@ -48,13 +48,13 @@ export class Toolbar {
         handlers.onMove(p2);
       };
 
-      document.addEventListener("mousemove", moveFunc);
+      document.addEventListener('mousemove', moveFunc);
       document.addEventListener(
-        "mouseup",
+        'mouseup',
         () => {
-          document.removeEventListener("mousemove", moveFunc);
+          document.removeEventListener('mousemove', moveFunc);
         },
-        { once: true }
+        { once: true },
       );
     };
 
@@ -62,9 +62,9 @@ export class Toolbar {
     this.addButton(text, (changeActive) => {
       changeActive(!active);
       if (active) {
-        svg.el.removeEventListener("mousedown", mouseDownHandler);
+        svg.el.removeEventListener('mousedown', mouseDownHandler);
       } else {
-        svg.el.addEventListener("mousedown", mouseDownHandler);
+        svg.el.addEventListener('mousedown', mouseDownHandler);
       }
       active = !active;
     });

@@ -11,5 +11,13 @@
     "typescript": "^4.3.2",
     "vite": "^2.4.4"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "prettier": {
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 110,
+    "tabWidth": 2,
+    "endOfLine": "auto"
+  }
 }
