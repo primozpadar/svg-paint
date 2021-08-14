@@ -1,4 +1,4 @@
-import './screenshot.scss';
+import './save.scss';
 import { Point } from './svg/point';
 import { Rectangle } from './svg/rectangle';
 import { Svg } from './svg/svg';
@@ -18,11 +18,16 @@ export class Save {
       (e) => {
         const start = getMousePos(e);
         const rect = new Rectangle(svgArea, start, start, { stroke: { color: '#fff', width: 2 } });
+        const rectFollow = new RectFollow();
 
         let end: Point;
         const updateEnd = (e: MouseEvent) => {
           end = getMousePos(e);
           rect.updatePoints({ p2: end });
+
+          const width = Math.abs(start.x - end.x);
+          const height = Math.abs(start.y - end.y);
+          rectFollow.update(width, height);
         };
 
         document.addEventListener('mousemove', updateEnd);
@@ -31,6 +36,7 @@ export class Save {
           () => {
             document.removeEventListener('mousemove', updateEnd);
             rect.remove();
+            rectFollow.remove();
             cb(start, end);
             screenshotArea.remove();
           },
@@ -80,5 +86,30 @@ export class Save {
         initialViewbox ? svg.el.setAttribute('viewBox', initialViewbox) : svg.el.removeAttribute('viewBox');
       };
     });
+  }
+}
+
+class RectFollow {
+  container: HTMLDivElement;
+
+  constructor() {
+    this.container = document.createElement('div');
+    this.container.id = 'rectFollow';
+    document.body.appendChild(this.container);
+
+    window.addEventListener('mousemove', (e) => {
+      this.container.style.left = e.clientX + 5 + 'px';
+      this.container.style.top = e.clientY + 5 + 'px';
+    });
+
+    this.update(0, 0);
+  }
+
+  update(width: number, height: number) {
+    this.container.innerHTML = `${width} x ${height}`;
+  }
+
+  remove() {
+    this.container.remove();
   }
 }
