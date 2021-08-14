@@ -44,4 +44,8 @@ export class Rectangle {
     const style = `fill:${this.fill};stroke-width:${this.stroke.width};stroke:${this.stroke.color}`;
     setAttr(this.el, 'style', style);
   }
+
+  remove() {
+    this.el.remove();
+  }
 }
