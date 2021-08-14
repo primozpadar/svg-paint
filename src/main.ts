@@ -1,4 +1,5 @@
 import "./global.scss";
+import { Line } from "./svg/line";
 import { Svg } from "./svg/svg";
 import { Toolbar } from "./toolbar/toolbar";
 
@@ -9,4 +10,9 @@ const svg = new Svg(app, { height: "100vh", width: "100vw" });
 svg.setBackgroundColor("#141b20");
 
 const toolbar = new Toolbar(app);
-toolbar.addButton("Hello world", () => console.log("hello world"));
+
+let tempLine: Line;
+toolbar.addDrawButton("Line", svg, {
+  onStart: (p1) => (tempLine = new Line(svg, p1, p1)),
+  onMove: (p2) => tempLine.updatePoints({ p2 }),
+});
